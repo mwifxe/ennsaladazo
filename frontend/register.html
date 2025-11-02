@@ -213,7 +213,7 @@
             lucide.createIcons();
 
             try {
-                const response = await fetch('http://localhost:3004/api/auth/register', {
+                const response = await fetch('http://localhost:3050/api/auth/register', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ username, email, password })
@@ -232,7 +232,7 @@
                         window.location.href = 'login.html';
                     }, 1500);
                 } else {
-                    statusMessage.textContent = '❌ ' + (data.detail || 'Error al registrar usuario.');
+                    statusMessage.textContent = '❌ ' + (data.message || 'Error al registrar usuario.');
                     statusMessage.className = 'error';
                     
                     // Restaurar botón

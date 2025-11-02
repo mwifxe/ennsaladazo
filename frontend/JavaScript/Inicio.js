@@ -3,7 +3,7 @@
 // ======================
 
 // URL del backend - CAMBIA ESTO según tu configuración
-const API_URL = 'http://localhost:3050/api';  // Backend en desarrollo
+const API_URL = 'http://localhost:3050';  // Backend NestJS
 // const API_URL = 'https://tu-app.onrender.com';  // Para producción
 
 // ======================
@@ -59,7 +59,7 @@ async function checkBackendConnection() {
     } catch (error) {
         console.error('❌ No se pudo conectar al backend:', error);
         console.log('💡 Asegúrate de que el backend esté corriendo en:', API_URL);
-        console.log('💡 Ejecuta: python main.py');
+        console.log('💡 Ejecuta: npm run start:dev');
     }
 }
 
@@ -104,7 +104,7 @@ async function addToCart(productName, price) {
 
         if (!response.ok) {
             const error = await response.json();
-            throw new Error(error.detail || 'Error al agregar al carrito');
+            throw new Error(error.message || 'Error al agregar al carrito');
         }
 
         const data = await response.json();
@@ -124,7 +124,8 @@ async function updateCartBadge() {
     const userSession = getUserSession();
 
     try {
-        const response = await fetch(`${API_URL}/api/cart/${userSession}/total`);
+        // Endpoint correcto del backend NestJS
+        const response = await fetch(`${API_URL}/api/cart?user_session=${userSession}`);
 
         if (!response.ok) return;
 
@@ -144,8 +145,9 @@ async function updateCartBadge() {
             }
         }
 
-        if (data.item_count > 0) {
-            badge.textContent = data.item_count;
+        // data.count es el número total de items en el carrito
+        if (data.count > 0) {
+            badge.textContent = data.count;
             badge.style.display = 'block';
         } else {
             badge.style.display = 'none';
@@ -153,6 +155,59 @@ async function updateCartBadge() {
 
     } catch (error) {
         console.error('Error al actualizar badge:', error);
+    }
+}
+
+// Ver carrito completo
+async function viewCart() {
+    const userSession = getUserSession();
+
+    try {
+        const response = await fetch(`${API_URL}/api/cart?user_session=${userSession}`);
+
+        if (!response.ok) {
+            throw new Error('Error al obtener el carrito');
+        }
+
+        const cart = await response.json();
+
+        console.log('🛒 Carrito:', cart);
+        console.log('Total items:', cart.count);
+        console.log('Total price: $', cart.total);
+        console.log('Items:', cart.items);
+
+        // Aquí puedes mostrar el carrito en un modal o página
+        // Por ahora solo lo mostramos en consola
+        showNotification(`Carrito: ${cart.count} items - Total: $${cart.total}`, 'info');
+
+        return cart;
+
+    } catch (error) {
+        console.error('Error al ver carrito:', error);
+        showNotification('Error al obtener el carrito', 'error');
+    }
+}
+
+// Limpiar carrito
+async function clearCart() {
+    const userSession = getUserSession();
+
+    try {
+        const response = await fetch(`${API_URL}/api/cart/clear/all?user_session=${userSession}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al limpiar el carrito');
+        }
+
+        console.log('✅ Carrito limpiado');
+        showNotification('Carrito vaciado', 'success');
+        updateCartBadge();
+
+    } catch (error) {
+        console.error('Error al limpiar carrito:', error);
+        showNotification('Error al limpiar el carrito', 'error');
     }
 }
 
@@ -169,11 +224,18 @@ if (contactForm) {
             name: this.querySelector('input[type="text"]').value,
             email: this.querySelector('input[type="email"]').value,
             message: this.querySelector('textarea').value,
-            phone: null
         };
 
         console.log('📧 Enviando mensaje de contacto...');
 
+        // Por ahora solo mostramos un mensaje de éxito
+        // El backend no tiene endpoint de contacto todavía
+        console.log('Datos del formulario:', formData);
+        showNotification('¡Mensaje enviado! Te contactaremos pronto.', 'success');
+        this.reset();
+
+        // TODO: Cuando se implemente el endpoint de contacto, descomentar esto:
+        /*
         try {
             const response = await fetch(`${API_URL}/api/contact`, {
                 method: 'POST',
@@ -185,7 +247,7 @@ if (contactForm) {
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.detail || 'Error al enviar mensaje');
+                throw new Error(error.message || 'Error al enviar mensaje');
             }
 
             const data = await response.json();
@@ -196,41 +258,17 @@ if (contactForm) {
 
         } catch (error) {
             console.error('❌ Error:', error);
-            showNotification('Error al enviar el mensaje. ' + error.message, 'error');
+            showNotification('Error al enviar el mensaje. Intenta de nuevo.', 'error');
         }
+        */
     });
 }
-
-// ======================
-//    BOTONES DE AGREGAR AL CARRITO
-// ======================
-
-// Detectar clicks en botones de agregar al carrito
-document.addEventListener('click', function(e) {
-    if (e.target.matches('.add-to-cart, .order-btn, .extra-btn')) {
-        const menuItem = e.target.closest('.menu-item, .menu-item-large, .extra-item');
-
-        if (menuItem) {
-            const productName = menuItem.querySelector('h3, h2').textContent;
-            const priceElement = menuItem.querySelector('.price, .extra-price');
-
-            if (priceElement) {
-                const priceText = priceElement.textContent;
-                const price = parseFloat(priceText.replace('$', ''));
-
-                addToCart(productName, price);
-            }
-        }
-    }
-});
 
 // ======================
 //    SISTEMA DE NOTIFICACIONES
 // ======================
 
 function showNotification(message, type = 'info') {
-    console.log(`📢 Notificación [${type}]:`, message);
-
     let container = document.getElementById('notification-container');
     if (!container) {
         container = document.createElement('div');
@@ -240,12 +278,14 @@ function showNotification(message, type = 'info') {
             top: 20px;
             right: 20px;
             z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         `;
         document.body.appendChild(container);
     }
 
     const notification = document.createElement('div');
-    notification.className = `notification notification-${type}`;
     notification.style.cssText = `
         background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
         color: white;
@@ -333,6 +373,24 @@ if (ctaButton) {
 }
 
 // ======================
+//    EVENT LISTENERS PARA BOTONES DE AGREGAR AL CARRITO
+// ======================
+
+// Agregar event listeners a todos los botones "Agregar al Carrito"
+document.addEventListener('DOMContentLoaded', function() {
+    const addToCartButtons = document.querySelectorAll('.add-to-cart');
+
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const productName = this.getAttribute('data-product');
+            const price = parseFloat(this.getAttribute('data-price'));
+
+            addToCart(productName, price);
+        });
+    });
+});
+
+// ======================
 //    LOG INICIAL
 // ======================
 
@@ -345,6 +403,12 @@ console.log(`
 
 📡 Backend: ${API_URL}
 👤 Sesión: ${getUserSession()}
+
+💡 Funciones disponibles:
+   - addToCart(productName, price)
+   - viewCart()
+   - clearCart()
+   - updateCartBadge()
 
 💡 Abre la consola (F12) para ver los logs de todas las operaciones.
 💡 Si hay errores de conexión, asegúrate de que el backend esté corriendo.
