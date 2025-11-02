@@ -3,7 +3,7 @@
 // ======================
 
 // URL del backend - CAMBIA ESTO según tu configuración
-const API_URL = 'http://localhost:3004';  // Backend en desarrollo
+const API_URL = 'http://localhost:3050/api';  // Backend en desarrollo
 // const API_URL = 'https://tu-app.onrender.com';  // Para producción
 
 // ======================

@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90c3865d-9da3-41e8-8e08-5ab25f5b657d" name="Changes" comment="" />
+    <list default="true" id="90c3865d-9da3-41e8-8e08-5ab25f5b657d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/backend/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/backend/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/pnpm-lock.yaml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="tsconfig.json" />
+        <option value="TypeScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend" />
@@ -17,6 +29,9 @@
   "associatedIndex": 6
 }]]></component>
   <component name="ProjectId" id="34vlneGYvzT9pkY76SGB3GrTIwk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -33,7 +48,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/ismael/.local/share/JetBrains/Toolbox/apps/webstorm/plugins/javascript-plugin/jsLanguageServicesImpl/external",
+    "ts.external.directory.path": "/home/ismael/WebstormProjects/Ensaladazo-web/backend/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -56,7 +71,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762102094999</updated>
-      <workItem from="1762102097535" duration="599000" />
+      <workItem from="1762102097535" duration="3390000" />
     </task>
     <servers />
   </component>

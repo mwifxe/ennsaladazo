@@ -3,10 +3,24 @@ import { AppService } from './app.service';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+    constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+    @Get('health')
+    getHealth() {
+        return this.appService.getHealthCheck();
+    }
+
+    @Get()
+    getRoot() {
+        return {
+            message: 'Bienvenido a Ensaladazo! API',
+            version: '1.0.0',
+            endpoints: {
+                health: '/health',
+                products: '/api/products',
+                cart: '/api/cart',
+                users: '/api/users',
+            },
+        };
+    }
 }
