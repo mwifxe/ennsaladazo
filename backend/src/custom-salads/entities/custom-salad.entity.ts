@@ -23,26 +23,19 @@ export class CustomSalad {
     @Column({ type: 'varchar', length: 100 })
     name: string;
 
-    @Column({ type: 'varchar', length: 50 })
-    base: string; // lechuga, espinaca, kale, mix
-
+    // ✅ NUEVO: Guardar todos los ingredientes como JSON
     @Column({ type: 'json' })
-    vegetables: string[]; // array de vegetales seleccionados
-
-    @Column({ type: 'json' })
-    proteins: string[]; // array de proteínas
-
-    @Column({ type: 'varchar', length: 50 })
-    dressing: string;
-
-    @Column({ type: 'json', nullable: true })
-    extras: string[]; // extras opcionales
+    ingredients: Array<{
+        name: string;
+        category: string;
+        price: number;
+    }>;
 
     @Column({ type: 'decimal', precision: 10, scale: 2 })
     total_price: number;
 
     @Column({ type: 'text', nullable: true })
-    notes: string; // notas especiales
+    notes: string;
 
     @CreateDateColumn()
     created_at: Date;

@@ -5,8 +5,23 @@ import {
     IsOptional,
     Min,
     MaxLength,
+    ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
+// DTO para cada ingrediente individual
+export class IngredientDto {
+    @IsString()
+    name: string;
+
+    @IsString()
+    category: string;
+
+    @IsNumber()
+    price: number;
+}
+
+// DTO para crear ensalada personalizada (CORREGIDO)
 export class CreateCustomSaladDto {
     @IsString()
     user_session: string;
@@ -15,24 +30,11 @@ export class CreateCustomSaladDto {
     @MaxLength(100)
     name: string;
 
-    @IsString()
-    base: string;
-
+    // ✅ NUEVO: Aceptar array de ingredientes
     @IsArray()
-    @IsString({ each: true })
-    vegetables: string[];
-
-    @IsArray()
-    @IsString({ each: true })
-    proteins: string[];
-
-    @IsString()
-    dressing: string;
-
-    @IsOptional()
-    @IsArray()
-    @IsString({ each: true })
-    extras?: string[];
+    @ValidateNested({ each: true })
+    @Type(() => IngredientDto)
+    ingredients: IngredientDto[];
 
     @IsNumber()
     @Min(0)
@@ -48,8 +50,9 @@ export class CustomSaladIngredientsDto {
     bases: IngredientOption[];
     vegetables: IngredientOption[];
     proteins: IngredientOption[];
+    toppings?: IngredientOption[];
     dressings: IngredientOption[];
-    extras: IngredientOption[];
+    extras?: IngredientOption[];
 }
 
 export class IngredientOption {

@@ -17,19 +17,24 @@ export class CustomSaladsService {
         private readonly usersService: UsersService,
     ) {}
 
-    async create(createCustomSaladDto: CreateCustomSaladDto): Promise<CustomSalad> {
-        const { user_session, ...saladData } = createCustomSaladDto;
+  async create(createCustomSaladDto: CreateCustomSaladDto): Promise<CustomSalad> {
+    const { user_session, ...saladData } = createCustomSaladDto;
 
-        // Obtener o crear usuario
-        const user = await this.usersService.findBySessionId(user_session);
+    // Obtener o crear usuario
+    const user = await this.usersService.findBySessionId(user_session);
 
-        const customSalad = this.customSaladRepository.create({
-            ...saladData,
-            user_id: user.id,
-        });
+    const customSalad = this.customSaladRepository.create({
+      ...saladData,
+      user_id: user.id,
+    });
 
-        return await this.customSaladRepository.save(customSalad);
-    }
+    // Guardar en la base de datos
+    const savedSalad = await this.customSaladRepository.save(customSalad);
+
+    console.log('✅ Ensalada personalizada guardada:', savedSalad);
+
+    return savedSalad;
+  }
 
     async findAll(): Promise<CustomSalad[]> {
         return await this.customSaladRepository.find({

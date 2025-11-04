@@ -27,7 +27,7 @@ import { CustomSaladsModule } from './custom-salads/custom-salads.module';
             password: process.env.DB_PASSWORD || 'postgres',
             database: process.env.DB_DATABASE || 'ensaladazo_db',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: process.env.NODE_ENV === 'development', // Solo en desarrollo
+            synchronize: process.env.NODE_ENV === 'development',
             logging: process.env.NODE_ENV === 'development',
         }),
 

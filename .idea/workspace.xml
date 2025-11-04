@@ -5,9 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="90c3865d-9da3-41e8-8e08-5ab25f5b657d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/backend/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/backend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/backend/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/backend/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/JavaScript/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/JavaScript/cart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/armarensaladazo.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/armarensaladazo.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/cart.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/contacto.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/contacto.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/menu.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,15 +23,17 @@
       <list>
         <option value="tsconfig.json" />
         <option value="TypeScript File" />
+        <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 6
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
   <component name="ProjectId" id="34vlneGYvzT9pkY76SGB3GrTIwk" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="1" id="Add" />
@@ -38,6 +44,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
     "JavaScript Debug.api.executor": "Debug",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -82,7 +89,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1762102094999</updated>
-      <workItem from="1762102097535" duration="7857000" />
+      <workItem from="1762102097535" duration="8957000" />
+      <workItem from="1762222946998" duration="8796000" />
     </task>
     <servers />
   </component>

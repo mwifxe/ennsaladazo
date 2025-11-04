@@ -9,285 +9,356 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="CSS/styles-Menu.css">
-    <style>
-
-    </style>
 </head>
 
 <body>
-    <!-- HEADER CON NAVEGACIÓN -->
-    <header class="header">
-        <nav class="nav">
-            <!-- Logo -->
-            <div class="nav-brand">
-                <a href="index.html" class="logo-hover">
-                    <img class="logo-image" src="Images/Logos/logo-removebg-preview.png" alt="Logo Ensaladazo!">
-                </a>
-            </div>
-
-            <!-- Menú de navegación -->
-            <ul class="nav-menu">
-                <li><a href="index.html" class="nav-link">Inicio</a></li>
-                <li><a href="./menu.html" class="nav-link active">Menú</a></li>
-                <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
-                <li><a href="contacto.html" class="nav-link">Contacto</a></li>
-            </ul>
-
-            <!-- Acciones usuario -->
-            <div class="nav-actions">
-                <a href="login.html" class="cta-button">Iniciar Sesión</a>
-                <a href="cart.html" class="cart-icon" aria-label="Ver carrito">
-                    <i data-lucide="shopping-cart"></i>
-                    <span class="cart-badge" id="cart-count">0</span>
-                </a>
-            </div>
-        </nav>
-    </header>
-
-    <!-- HERO DE MENÚ -->
-    <section class="menu-hero">
-        <div class="hero-overlay"></div>
-        <div class="menu-hero-content">
-            <h1>Nuestro <span class="highlight">Menú</span></h1>
-            <p class="menu-intro">
-                Cada ensalada es una experiencia única. Preparamos todo fresco cada día,
-                con ingredientes que hacen la diferencia. No es solo comida saludable,
-                es comida que realmente te va a gustar.
-            </p>
+<!-- HEADER CON NAVEGACIÓN -->
+<header class="header">
+    <nav class="nav">
+        <!-- Logo -->
+        <div class="nav-brand">
+            <a href="index.html" class="logo-hover">
+                <img class="logo-image" src="Images/Logos/logo-removebg-preview.png" alt="Logo Ensaladazo!">
+            </a>
         </div>
-    </section>
 
-    <!-- SECCIÓN DE ENSALADAS -->
-    <section class="menu-section">
-        <div class="container">
-        
+        <!-- Menú de navegación -->
+        <ul class="nav-menu">
+            <li><a href="index.html" class="nav-link">Inicio</a></li>
+            <li><a href="./menu.html" class="nav-link active">Menú</a></li>
+            <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+            <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+        </ul>
 
-            <!-- Ensalada 1: CobbFit -->
-            <article class="menu-item-large">
-                <div class="item-image">
-                    <img src="Images/Ensaladas/cobbfit.jpeg" alt="Ensalada CobbFit con pollo, aguacate y tocino">
-                </div>
-                <div class="item-details">
-                    <h2>Ensalada CobbFit</h2>
-                    <p class="item-tagline">La favorita por una razón</p>
-                    <p class="item-description">
-                        Esta ensalada lo tiene todo. Lechuga fresca, tomate jugoso, aguacate cremoso,
-                        queso mozzarella derretido, tocino crujiente, pechuga de pollo a la parrilla,
-                        huevo duro y pan tostado doradito. Es el equilibrio perfecto entre sabor y
-                        nutrición. Ideal para cuando quieres algo completo que de verdad te llene.
-                    </p>
-                    <div class="item-highlights">
-                        <span class="highlight-badge">Alto en proteína</span>
-                        <span class="highlight-badge">Ingredientes frescos</span>
-                        <span class="highlight-badge">Súper completa</span>
-                    </div>
-                    <div class="item-footer">
-                        <span class="price">$4.00</span>
-                        <button class="order-btn" data-product="CobbFit" data-price="4.00">Agregar al Carrito</button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Resto de tus ensaladas existentes... -->
-            <!-- Ensalada 2: César -->
-            <article class="menu-item-large">
-                <div class="item-image">
-                    <img src="Images/Ensaladas/cesar.jpeg" alt="Ensalada César clásica con pollo">
-                </div>
-                <div class="item-details">
-                    <h2>Ensalada César</h2>
-                    <p class="item-tagline">Un clásico que nunca falla</p>
-                    <p class="item-description">
-                        La César original, pero nuestra. Lechuga crujiente, pechuga de pollo jugosa,
-                        huevo duro, tomate fresco, queso mozzarella y pan tostado que le da ese toque
-                        especial. Simple, pero hecha bien. Es esa opción confiable cuando no quieres
-                        complicarte pero tampoco quieres sacrificar sabor.
-                    </p>
-                    <div class="item-highlights">
-                        <span class="highlight-badge">Clásica</span>
-                        <span class="highlight-badge">Ligera y satisfactoria</span>
-                        <span class="highlight-badge">Para todos los días</span>
-                    </div>
-                    <div class="item-footer">
-                        <span class="price">$3.25</span>
-                        <button class="order-btn" data-product="César" data-price="3.25">Agregar al Carrito</button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Ensalada 3: Tropical -->
-            <article class="menu-item-large">
-                <div class="item-image">
-                    <img src="Images/Ensaladas/tropical.jpeg" alt="Ensalada Tropical con frutas frescas">
-                </div>
-                <div class="item-details">
-                    <h2>Ensalada Tropical</h2>
-                    <p class="item-tagline">Dale sabor a tu día</p>
-                    <p class="item-description">
-                        Mix de lechugas, pollo a la parrilla, piña fresca, mango, aguacate,
-                        almendras tostadas y un toque de vinagreta de cítricos. Es fresca,
-                        es diferente, y te va a sorprender. Perfecta para cuando quieres
-                        algo nuevo sin perder lo saludable.
-                    </p>
-                    <div class="item-highlights">
-                        <span class="highlight-badge">Frutas frescas</span>
-                        <span class="highlight-badge">Sabor único</span>
-                        <span class="highlight-badge">Refrescante</span>
-                    </div>
-                    <div class="item-footer">
-                        <span class="price">$3.75</span>
-                        <button class="order-btn" data-product="Tropical" data-price="3.75">Agregar al Carrito</button>
-                    </div>
-                </div>
-            </article>
-
-            <!-- Ensalada 4: Mediterránea -->
-            <article class="menu-item-large">
-                <div class="item-image">
-                    <img src="Images/Ensaladas/mediterranea.jpeg" alt="Ensalada Mediterránea con queso feta">
-                </div>
-                <div class="item-details">
-                    <h2>Ensalada Mediterránea</h2>
-                    <p class="item-tagline">Sabores del mundo en tu plato</p>
-                    <p class="item-description">
-                        Lechugas mixtas, tomates cherry, pepino, aceitunas negras, queso feta,
-                        cebolla morada y pollo marinado. Todo con un aderezo de hierbas que
-                        te transporta. Es para los que quieren probar algo con personalidad
-                        y lleno de sabor auténtico.
-                    </p>
-                    <div class="item-highlights">
-                        <span class="highlight-badge">Sabores intensos</span>
-                        <span class="highlight-badge">Estilo mediterráneo</span>
-                        <span class="highlight-badge">Muy sabrosa</span>
-                    </div>
-                    <div class="item-footer">
-                        <span class="price">$3.50</span>
-                        <button class="order-btn" data-product="Mediterránea" data-price="3.50">Agregar al Carrito</button>
-                    </div>
-                </div>
-            </article>
+        <!-- Acciones usuario -->
+        <div class="nav-actions">
+            <a href="login.html" class="cta-button">Iniciar Sesión</a>
+            <a href="cart.html" class="cart-icon" aria-label="Ver carrito">
+                <i data-lucide="shopping-cart"></i>
+                <span class="cart-badge" id="cart-count">0</span>
+            </a>
         </div>
-    </section>
+    </nav>
+</header>
 
-    <!-- SECCIÓN ADICIONAL -->
-    <section class="extras-section">
-        <div class="container">
-            <h2>¿Algo Más?</h2>
-            <div class="extras-grid">
-                <article class="extra-item">
-                    <i data-lucide="droplet" size="50"></i>
-                    <h3>Smoothie Verde</h3>
-                    <p>Espinaca, manzana verde, jengibre y menta. Energía pura.</p>
-                    <span class="extra-price">$2.75</span>
-                    <button class="extra-btn" data-product="Smoothie Verde" data-price="2.75">Agregar</button>
-                </article>
-                
-                <article class="extra-item">
-                    <i data-lucide="sparkles" size="50"></i>
-                    <h3>Aderezos Extra</h3>
-                    <p>Ranch, César, Balsámico, Miel Mostaza</p>
-                    <span class="extra-price">$0.50</span>
-                    <button class="extra-btn" data-product="Aderezo Extra" data-price="0.50">Agregar</button>
-                </article>
-                
-                <article class="extra-item">
-                    <i data-lucide="beef" size="50"></i>
-                    <h3>Proteína Extra</h3>
-                    <p>Más pollo, huevo o queso para tu ensalada</p>
-                    <span class="extra-price">$1.00</span>
-                    <button class="extra-btn" data-product="Proteína Extra" data-price="1.00">Agregar</button>
-                </article>
+<!-- HERO DE MENÚ -->
+<section class="menu-hero">
+    <div class="hero-overlay"></div>
+    <div class="menu-hero-content">
+        <h1>Nuestro <span class="highlight">Menú</span></h1>
+        <p class="menu-intro">
+            Cada ensalada es una experiencia única. Preparamos todo fresco cada día,
+            con ingredientes que hacen la diferencia. No es solo comida saludable,
+            es comida que realmente te va a gustar.
+        </p>
+    </div>
+</section>
+
+<!-- SECCIÓN DE ENSALADAS -->
+<section class="menu-section">
+    <div class="container" id="salads-container">
+        <!-- Las ensaladas se cargarán aquí dinámicamente -->
+        <div style="text-align: center; padding: 60px 20px;">
+            <div style="display: inline-block;">
+                <div style="width: 50px; height: 50px; border: 4px solid #f3f3f3; border-top: 4px solid #4CAF50; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                <p style="margin-top: 20px; color: #666; font-size: 16px;">Cargando nuestras deliciosas ensaladas...</p>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- BOTÓN DE ENSALADA PERSONALIZADA - PRIMER ELEMENTO DESTACADO -->
-            <div class="custom-salad-card" onclick="location.href='armar-ensalada.html'">
-                <div class="card-background"></div>
-                <div class="card-content">
-                    <div class="card-icon">
-                        <i data-lucide="sparkles" size="40"></i>
-                    </div>
-                    <h3 class="card-title">¿Ninguna te convence?<br><span class="highlight">¡Crea la tuya!</span></h3>
-                    <p class="card-description">
-                        Mezcla y combina tus ingredientes favoritos para crear la ensalada perfecta a tu gusto. 
-                        Tú eliges cada detalle, nosotros la preparamos con todo el amor y frescura.
-                    </p>
-                    <div class="card-features">
-                        <div class="feature">
-                            <i data-lucide="check" size="16"></i>
-                            <span>Elige tus ingredientes</span>
-                        </div>
-                        <div class="feature">
-                            <i data-lucide="check" size="16"></i>
-                            <span>Precio según lo que elijas</span>
-                        </div>
-                        <div class="feature">
-                            <i data-lucide="check" size="16"></i>
-                            <span>Totalmente personalizable</span>
-                        </div>
-                    </div>
-                    <a href="armarensaladazo.html" class="create-btn">
-                        <i data-lucide="chef-hat" size="20"></i>
-                        Armar Mi Ensaladazo
-                    </a>
-                </div>
-            </div>
-
-    <!-- FOOTER -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="logo-hover">
-                        <img class="logo-image" src="Images/Logos/logo-removebg-preview.png" alt="Logo Ensaladazo!" loading="lazy">
-                    </div>
-                    <p>Nutrición fresca para tu vida diaria</p>
-                </div>
-
-                <div class="footer-links">
-                    <h4>Enlaces Rápidos</h4>
-                    <ul>
-                        <li><a href="index.html">Inicio</a></li>
-                        <li><a href="./menu.html">Menú</a></li>
-                        <li><a href="nosotros.html">Nosotros</a></li>
-                        <li><a href="contacto.html">Contacto</a></li>
-                    </ul>
-                </div>
-
-                <div class="footer-info">
-                    <h4>Horarios</h4>
-                    <p>Lun - Vie: 8:00 AM - 6:00 PM</p>
-                    <p>Sábado: 9:00 AM - 4:00 PM</p>
-                    <p>Domingo: 10:00 AM - 3:00 PM</p>
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <p>&copy; 2025 Ensaladazo!. Todos los derechos reservados.</p>
+<!-- SECCIÓN ADICIONAL -->
+<section class="extras-section">
+    <div class="container">
+        <h2>¿Algo Más?</h2>
+        <div class="extras-grid" id="extras-container">
+            <!-- Los extras se cargarán aquí dinámicamente -->
+            <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+                <p style="color: #666;">Cargando extras...</p>
             </div>
         </div>
-    </footer>
+    </div>
+</section>
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
-    
-    <!-- Custom JS -->
-    <script src="JavaScript/Inicio.js"></script>
+<!-- BOTÓN DE ENSALADA PERSONALIZADA -->
+<div class="custom-salad-card">
+    <div class="card-background"></div>
+    <div class="card-content">
+        <div class="card-icon">
+            <i data-lucide="sparkles" size="40"></i>
+        </div>
+        <h3 class="card-title">¿Ninguna te convence?<br><span class="highlight">¡Crea la tuya!</span></h3>
+        <p class="card-description">
+            Mezcla y combina tus ingredientes favoritos para crear la ensalada perfecta a tu gusto.
+            Tú eliges cada detalle, nosotros la preparamos con todo el amor y frescura.
+        </p>
+        <div class="card-features">
+            <div class="feature">
+                <i data-lucide="check" size="16"></i>
+                <span>Elige tus ingredientes</span>
+            </div>
+            <div class="feature">
+                <i data-lucide="check" size="16"></i>
+                <span>Precio según lo que elijas</span>
+            </div>
+            <div class="feature">
+                <i data-lucide="check" size="16"></i>
+                <span>Totalmente personalizable</span>
+            </div>
+        </div>
+        <a href="armarensaladazo.html" class="create-btn">
+            <i data-lucide="chef-hat" size="20"></i>
+            Armar Mi Ensaladazo
+        </a>
+    </div>
+</div>
 
-    <!-- Inicializar iconos -->
-    <script>
-        lucide.createIcons();
-        
-        // Hacer toda la card clickeable
-        document.querySelector('.custom-salad-card').addEventListener('click', function(e) {
-            if (e.target.tagName !== 'A') {
-                window.location.href = 'armar-ensalada.html';
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="logo-hover">
+                    <img class="logo-image" src="Images/Logos/logo-removebg-preview.png" alt="Logo Ensaladazo!" loading="lazy">
+                </div>
+                <p>Nutrición fresca para tu vida diaria</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="./menu.html">Menú</a></li>
+                    <li><a href="nosotros.html">Nosotros</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-info">
+                <h4>Horarios</h4>
+                <p>Lun - Vie: 8:00 AM - 6:00 PM</p>
+                <p>Sábado: 9:00 AM - 4:00 PM</p>
+                <p>Domingo: 10:00 AM - 3:00 PM</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ensaladazo!. Todos los derechos reservados.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Animación de carga -->
+<style>
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<script src="JavaScript/Inicio.js"></script>
+
+<!-- Script para cargar productos dinámicamente -->
+<script>
+    // Cargar productos desde el backend
+    async function loadMenuProducts() {
+        try {
+            console.log('🔄 Cargando productos del menú desde el backend...');
+
+            const response = await fetch(`${API_URL}/api/products`);
+
+            if (!response.ok) {
+                throw new Error('Error al cargar productos');
             }
+
+            const products = await response.json();
+            console.log('✅ Productos cargados:', products);
+
+            // Separar por categoría
+            const ensaladas = products.filter(p => p.category === 'ensaladas' || p.category === 'Ensalada');
+            const extras = products.filter(p => p.category === 'extras' || p.category === 'Extra');
+
+            // Renderizar ensaladas
+            renderSalads(ensaladas);
+
+            // Renderizar extras
+            renderExtras(extras);
+
+            // Inicializar iconos de Lucide
+            lucide.createIcons();
+
+        } catch (error) {
+            console.error('❌ Error al cargar productos:', error);
+
+            // Mostrar mensaje de error
+            document.getElementById('salads-container').innerHTML = `
+                    <div style="text-align: center; padding: 60px 20px; color: #f44336;">
+                        <p style="font-size: 18px; margin-bottom: 10px;">⚠️ No se pudieron cargar los productos</p>
+                        <p style="color: #666;">Verifica que el backend esté corriendo</p>
+                    </div>
+                `;
+        }
+    }
+
+    // Renderizar ensaladas (estilo grande)
+    function renderSalads(salads) {
+        const container = document.getElementById('salads-container');
+
+        if (salads.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #666;">No hay ensaladas disponibles</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+
+        salads.forEach(salad => {
+            const article = document.createElement('article');
+            article.className = 'menu-item-large';
+
+            // Mapeo de imágenes por nombre
+            const imageMap = {
+                'Ensalada CobbFit': 'Images/Ensaladas/cobbfit.jpeg',
+                'Ensalada César': 'Images/Ensaladas/cesar.jpeg',
+                'Ensalada Tropical': 'Images/Ensaladas/tropical.jpeg',
+                'Ensalada Mediterránea': 'Images/Ensaladas/mediterranea.jpeg'
+            };
+
+            // Mapeo de taglines
+            const taglineMap = {
+                'Ensalada CobbFit': 'La favorita por una razón',
+                'Ensalada César': 'Un clásico que nunca falla',
+                'Ensalada Tropical': 'Dale sabor a tu día',
+                'Ensalada Mediterránea': 'Sabores del mundo en tu plato'
+            };
+
+            // Mapeo de badges
+            const badgesMap = {
+                'Ensalada CobbFit': ['Alto en proteína', 'Ingredientes frescos', 'Súper completa'],
+                'Ensalada César': ['Clásica', 'Ligera y satisfactoria', 'Para todos los días'],
+                'Ensalada Tropical': ['Frutas frescas', 'Sabor único', 'Refrescante'],
+                'Ensalada Mediterránea': ['Sabores intensos', 'Estilo mediterráneo', 'Muy sabrosa']
+            };
+
+            const imageSrc = salad.image_url || imageMap[salad.name] || 'Images/Ensaladas/default.jpeg';
+            const tagline = taglineMap[salad.name] || 'Deliciosa y saludable';
+            const badges = badgesMap[salad.name] || ['Fresca', 'Saludable', 'Deliciosa'];
+
+            article.innerHTML = `
+                    <div class="item-image">
+                        <img src="${imageSrc}" alt="${salad.name}">
+                    </div>
+                    <div class="item-details">
+                        <h2>${salad.name}</h2>
+                        <p class="item-tagline">${tagline}</p>
+                        <p class="item-description">${salad.description}</p>
+                        <div class="item-highlights">
+                            ${badges.map(badge => `<span class="highlight-badge">${badge}</span>`).join('')}
+                        </div>
+                        <div class="item-footer">
+                            <span class="price">$${parseFloat(salad.price).toFixed(2)}</span>
+                            <button class="order-btn"
+                                    data-product-name="${salad.name}"
+                                    data-product-price="${salad.price}">
+                                Agregar al Carrito
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+            // Agregar evento al botón
+            const button = article.querySelector('.order-btn');
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product-name');
+                const productPrice = parseFloat(this.getAttribute('data-product-price'));
+
+                if (typeof addToCart === 'function') {
+                    addToCart(productName, productPrice);
+                } else {
+                    console.error('❌ Función addToCart no disponible');
+                }
+            });
+
+            container.appendChild(article);
         });
-    </script>
+    }
+
+    // Renderizar extras
+    function renderExtras(extras) {
+        const container = document.getElementById('extras-container');
+
+        if (extras.length === 0) {
+            container.innerHTML = '<p style="text-align: center; color: #666;">No hay extras disponibles</p>';
+            return;
+        }
+
+        container.innerHTML = '';
+
+        // Mapeo de iconos
+        const iconMap = {
+            'Smoothie Verde': 'droplet',
+            'Aderezos Extra': 'sparkles',
+            'Aderezo Extra': 'sparkles',
+            'Proteína Extra': 'beef',
+            'Pan Tostado': 'wheat'
+        };
+
+        extras.forEach(extra => {
+            const article = document.createElement('article');
+            article.className = 'extra-item';
+
+            const icon = iconMap[extra.name] || 'circle';
+
+            article.innerHTML = `
+                    <i data-lucide="${icon}" size="50"></i>
+                    <h3>${extra.name}</h3>
+                    <p>${extra.description}</p>
+                    <span class="extra-price">$${parseFloat(extra.price).toFixed(2)}</span>
+                    <button class="extra-btn"
+                            data-product-name="${extra.name}"
+                            data-product-price="${extra.price}">
+                        Agregar
+                    </button>
+                `;
+
+            // Agregar evento al botón
+            const button = article.querySelector('.extra-btn');
+            button.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product-name');
+                const productPrice = parseFloat(this.getAttribute('data-product-price'));
+
+                if (typeof addToCart === 'function') {
+                    addToCart(productName, productPrice);
+                } else {
+                    console.error('❌ Función addToCart no disponible');
+                }
+            });
+
+            container.appendChild(article);
+        });
+    }
+
+    // Cargar productos cuando el DOM esté listo
+    document.addEventListener('DOMContentLoaded', function() {
+        loadMenuProducts();
+
+        // Inicializar iconos
+        lucide.createIcons();
+
+        // Hacer toda la card clickeable
+        const customCard = document.querySelector('.custom-salad-card');
+        if (customCard) {
+            customCard.addEventListener('click', function(e) {
+                if (e.target.tagName !== 'A' && !e.target.closest('a')) {
+                    window.location.href = 'armarensaladazo.html';
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>
