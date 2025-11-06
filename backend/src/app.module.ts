@@ -15,14 +15,21 @@ import { AppService } from './app.service';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
         const databaseUrl = configService.get<string>('DATABASE_URL');
-        console.log('🧩 DATABASE_URL loaded ✅');
+
+        // 🔍 Log para Render
+        console.log(`🧩 DATABASE_URL => ${databaseUrl}`);
 
         return {
           type: 'postgres',
           url: databaseUrl,
           autoLoadEntities: true,
           synchronize: true,
-          ssl: true, // 👈 Render ya maneja el certificado internamente
+          extra: {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false,
+            },
+          },
         };
       },
     }),
