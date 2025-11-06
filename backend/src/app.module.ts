@@ -6,24 +6,32 @@ import { AppService } from './app.service';
 
 @Module({
   imports: [
-    // Carga global de variables de entorno (.env o Render Env Vars)
+    // 🔧 Carga global de variables de entorno (.env o Render Env Vars)
     ConfigModule.forRoot({
       isGlobal: true,
     }),
 
-    // Configuración dinámica de TypeORM con soporte para Render
+    // ⚡ Conexión dinámica con la base de datos PostgreSQL de Render
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        url: configService.get<string>('DATABASE_URL'), // 👈 Render env var
-        autoLoadEntities: true,
-        synchronize: true,
-        ssl: {
-          rejectUnauthorized: false, // 👈 Render exige SSL
-        },
-      }),
+      useFactory: (configService: ConfigService) => {
+        const databaseUrl = configService.get<string>('DATABASE_URL');
+        console.log('🧩 DATABASE_URL =>', databaseUrl); // <- debug temporal
+
+        return {
+          type: 'postgres',
+          url: databaseUrl,
+          autoLoadEntities: true,
+          synchronize: true,
+          extra: {
+            ssl: {
+              require: true,
+              rejectUnauthorized: false,
+            },
+          },
+        };
+      },
     }),
   ],
   controllers: [AppController],
