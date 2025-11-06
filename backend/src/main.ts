@@ -5,7 +5,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
 
-    // Habilitar validación global
+    // Validación global
     app.useGlobalPipes(
         new ValidationPipe({
             whitelist: true,
@@ -17,11 +17,9 @@ async function bootstrap() {
     // Configurar CORS
     app.enableCors({
         origin: (origin, callback) => {
-            // Permitir requests sin origin (como Postman) o desde localhost
             if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
                 callback(null, true);
             } else {
-                // En producción, usar la lista específica del .env
                 const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || [];
                 if (allowedOrigins.includes(origin)) {
                     callback(null, true);
@@ -34,17 +32,17 @@ async function bootstrap() {
         credentials: true,
     });
 
-    // Prefijo global para las rutas (excepto health check)
+    // Prefijo global
     app.setGlobalPrefix('api', {
         exclude: ['health', ''],
     });
 
     const port = process.env.PORT || 3000;
-    await app.listen(port);
+    await app.listen(port, '0.0.0.0'); // 👈 CAMBIO CLAVE
 
-    console.log(`\nServidor corriendo en: http://localhost:${port}`);
-    console.log(`API disponible en: http://localhost:${port}/api`);
-    console.log(`Health check: http://localhost:${port}/health\n`);
+    console.log(`\n🚀 Servidor corriendo en: http://localhost:${port}`);
+    console.log(`🌿 API disponible en: http://localhost:${port}/api`);
+    console.log(`💚 Health check: http://localhost:${port}/health\n`);
 }
 
 bootstrap();
