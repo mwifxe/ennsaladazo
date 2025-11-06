@@ -42,4 +42,11 @@ export class CartController {
     clearCart(@Query('user_session') user_session: string) {
         return this.cartService.clearCart(user_session);
     }
+
+    @Post('migrate')
+    migrateCart(
+      @Body() body: { temp_session: string; new_session: string },
+    ) {
+      return this.cartService.migrateCart(body.temp_session, body.new_session);
+    }
 }

@@ -87,11 +87,14 @@
         // Inicializar íconos de Lucide
         lucide.createIcons();
 
+        // URL del backend (debe coincidir con Inicio.js)
+        const API_URL = 'http://localhost:3050';
+
         // Toggle para mostrar/ocultar contraseña
         document.getElementById('toggle-password').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
-            
+
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 icon.setAttribute('data-lucide', 'eye-off');
@@ -115,18 +118,13 @@
             // Mostrar estado de carga
             loginMessage.textContent = 'Iniciando sesión...';
             loginMessage.className = 'info';
-            
+
             loginBtn.disabled = true;
             loginBtn.innerHTML = '<i data-lucide="loader" class="loading-spinner"></i> Iniciando sesión...';
             lucide.createIcons();
 
             try {
-                // Preparar datos para enviar
-                const data = new URLSearchParams();
-                data.append("username", username);
-                data.append("password", password);
-
-                const response = await fetch("http://localhost:3050/api/auth/login", {
+                const response = await fetch(`${API_URL}/api/auth/login`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ username, password })
@@ -135,10 +133,12 @@
                 const result = await response.json();
 
                 if (response.ok) {
+                    console.log('✅ Login exitoso:', result);
+
                     // Guardar token y datos de usuario
                     localStorage.setItem("token", result.access_token);
                     localStorage.setItem("username", result.username);
-                    
+
                     // Guardar preferencia de "recordar sesión"
                     if (rememberMe) {
                         localStorage.setItem("rememberMe", "true");
@@ -146,20 +146,51 @@
                         localStorage.removeItem("rememberMe");
                     }
 
-                    loginMessage.textContent = "✅ ¡Inicio de sesión exitoso! Redirigiendo...";
+                    loginMessage.textContent = "✅ ¡Inicio de sesión exitoso! Migrando carrito...";
                     loginMessage.className = "success";
-                    
+
                     // Animación de éxito
-                    loginBtn.style.background = 'var(--success)';
-                    
-                    // Redirigir después de un breve delay
+                    loginBtn.style.background = 'var(--success, #4CAF50)';
+
+                    // **MIGRAR CARRITO ANTES DE REDIRECCIONAR**
+                    try {
+                        const tempSession = localStorage.getItem('user_session');
+
+                        if (tempSession && tempSession.startsWith('temp_')) {
+                            console.log('🔄 Migrando carrito temporal...');
+
+                            const migrateResponse = await fetch(`${API_URL}/api/cart/migrate`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    temp_session: tempSession,
+                                    new_session: `user_${result.username}`
+                                })
+                            });
+
+                            if (migrateResponse.ok) {
+                                console.log('✅ Carrito migrado exitosamente');
+                                // Limpiar sesión temporal
+                                localStorage.removeItem('user_session');
+                            }
+                        }
+                    } catch (migrateError) {
+                        console.warn('⚠️ Error al migrar carrito, pero continuando...', migrateError);
+                    }
+
+                    // Redirigir después de migrar
+                    loginMessage.textContent = "✅ ¡Todo listo! Redirigiendo...";
+
                     setTimeout(() => {
                         window.location.href = "index.html";
-                    }, 1500);
+                    }, 1000);
+
                 } else {
                     loginMessage.textContent = "❌ " + (result.message || "Credenciales incorrectas");
                     loginMessage.className = "error";
-                    
+
                     // Restaurar botón
                     loginBtn.disabled = false;
                     loginBtn.innerHTML = '<i data-lucide="log-in" size="20"></i> Iniciar Sesión';
@@ -169,7 +200,7 @@
                 console.error("Error de conexión:", error);
                 loginMessage.textContent = "⚠️ Error de conexión con el servidor. Intenta nuevamente.";
                 loginMessage.className = "error";
-                
+
                 // Restaurar botón
                 loginBtn.disabled = false;
                 loginBtn.innerHTML = '<i data-lucide="log-in" size="20"></i> Iniciar Sesión';
@@ -199,7 +230,11 @@
         window.addEventListener('DOMContentLoaded', () => {
             if (localStorage.getItem("rememberMe") === "true") {
                 document.getElementById('remember-me').checked = true;
-                // Aquí podrías cargar automáticamente el usuario si lo guardaste de forma segura
+            }
+
+            // Si ya está logueado, redireccionar
+            if (localStorage.getItem("token") && localStorage.getItem("username")) {
+                window.location.href = "index.html";
             }
         });
 

@@ -114,4 +114,85 @@ export class CartService {
 
         await this.cartItemRepository.delete({ user_id: user.id });
     }
+
+    // ⭐ MÉTODO CORREGIDO PARA MIGRAR CARRITO CON TYPEORM
+    async migrateCart(tempSession: string, newSession: string) {
+        if (!tempSession || !newSession) {
+            throw new Error('Faltan datos para migrar el carrito');
+        }
+
+        try {
+            console.log(`🔄 Migrando carrito de ${tempSession} a ${newSession}`);
+
+            // 1. Buscar el usuario temporal
+            const tempUser = await this.usersService.findBySessionId(tempSession);
+            
+            // 2. Buscar u obtener el usuario real (con la nueva sesión)
+            const realUser = await this.usersService.findBySessionId(newSession);
+
+            // 3. Si son el mismo usuario, no hay nada que migrar
+            if (tempUser.id === realUser.id) {
+                console.log('⚠️ Las sesiones pertenecen al mismo usuario');
+                return {
+                    success: true,
+                    message: 'No hay items para migrar',
+                    items_migrated: 0,
+                };
+            }
+
+            // 4. Obtener todos los items del carrito temporal
+            const tempCartItems = await this.cartItemRepository.find({
+                where: { user_id: tempUser.id },
+            });
+
+            console.log(`📦 Items encontrados en carrito temporal: ${tempCartItems.length}`);
+
+            if (tempCartItems.length === 0) {
+                return {
+                    success: true,
+                    message: 'No hay items para migrar',
+                    items_migrated: 0,
+                };
+            }
+
+            // 5. Migrar cada item al usuario real
+            let migratedCount = 0;
+
+            for (const tempItem of tempCartItems) {
+                // Verificar si el producto ya existe en el carrito del usuario real
+                const existingItem = await this.cartItemRepository.findOne({
+                    where: {
+                        user_id: realUser.id,
+                        product_id: tempItem.product_id,
+                    },
+                });
+
+                if (existingItem) {
+                    // Si existe, sumar las cantidades
+                    existingItem.quantity += tempItem.quantity;
+                    await this.cartItemRepository.save(existingItem);
+                    // Eliminar el item temporal
+                    await this.cartItemRepository.remove(tempItem);
+                } else {
+                    // Si no existe, cambiar el user_id
+                    tempItem.user_id = realUser.id;
+                    await this.cartItemRepository.save(tempItem);
+                }
+
+                migratedCount++;
+            }
+
+            console.log(`✅ Carrito migrado exitosamente`);
+            console.log(`   Items migrados: ${migratedCount}`);
+
+            return {
+                success: true,
+                message: 'Carrito migrado exitosamente',
+                items_migrated: migratedCount,
+            };
+        } catch (error) {
+            console.error('❌ Error al migrar carrito:', error);
+            throw new Error('Error al migrar carrito: ' + error.message);
+        }
+    }
 }

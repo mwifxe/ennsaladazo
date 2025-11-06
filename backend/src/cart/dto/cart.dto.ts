@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsUUID, Min } from 'class-validator';
+import { IsString, IsNumber, IsUUID, Min, IsNotEmpty } from 'class-validator';
 
 export class AddToCartDto {
     @IsString()
@@ -28,4 +28,14 @@ export class RemoveFromCartDto {
 
     @IsUUID()
     cart_item_id: string;
+}
+
+export class MigrateCartDto {
+  @IsString()
+  @IsNotEmpty()
+  temp_session: string;
+
+  @IsString()
+  @IsNotEmpty()
+  new_session: string;
 }

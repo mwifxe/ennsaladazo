@@ -6,12 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="90c3865d-9da3-41e8-8e08-5ab25f5b657d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/JavaScript/Inicio.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/JavaScript/Inicio.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/JavaScript/cart.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/JavaScript/cart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/armarensaladazo.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/armarensaladazo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/cart.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/cart.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/contacto.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/contacto.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/menu.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/menu.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/login.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,24 +39,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "JavaScript Debug.api.executor": "Debug",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "ts.external.directory.path": "/home/ismael/WebstormProjects/Ensaladazo-web/backend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;JavaScript Debug.api.executor&quot;: &quot;Debug&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/home/ismael/WebstormProjects/Ensaladazo-web/backend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -90,7 +87,9 @@
       <option name="presentableId" value="Default" />
       <updated>1762102094999</updated>
       <workItem from="1762102097535" duration="8957000" />
-      <workItem from="1762222946998" duration="8796000" />
+      <workItem from="1762222946998" duration="9515000" />
+      <workItem from="1762403103506" duration="387000" />
+      <workItem from="1762405555823" duration="2115000" />
     </task>
     <servers />
   </component>

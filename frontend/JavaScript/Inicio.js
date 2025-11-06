@@ -2,40 +2,46 @@
 //    CONFIGURACIÓN
 // ======================
 
-// URL del backend - CAMBIA ESTO según tu configuración
 const API_URL = 'http://localhost:3050';  // Backend NestJS
-// const API_URL = 'https://tu-app.onrender.com';  // Para producción
 
 // ======================
-//    INICIALIZACIÓN
+//    SESIÓN DE USUARIO
 // ======================
 
-// Generar o recuperar ID de sesión del usuario
 function getUserSession() {
+    // Primero verificar si hay un usuario logueado
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    if (token && username) {
+        // Si hay usuario logueado, usar su username como sesión
+        return `user_${username}`;
+    }
+
+    // Si no hay usuario, usar sesión temporal
     let session = localStorage.getItem('user_session');
     if (!session) {
-        session = 'user_' + Math.random().toString(36).substr(2, 9);
+        session = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
         localStorage.setItem('user_session', session);
     }
     return session;
 }
 
-// Inicializar cuando la página cargue
+// ======================
+//    INICIALIZACIÓN
+// ======================
+
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Ensaladazo! Frontend iniciado');
     console.log('📡 Backend URL:', API_URL);
     console.log('👤 User Session:', getUserSession());
 
-    // Inicializar iconos de Lucide
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
+    if (typeof lucide !== 'undefined') lucide.createIcons();
 
-    // Actualizar badge del carrito
+    updateUIForLoggedInUser();
     updateCartBadge();
-
-    // Verificar conexión con backend
     checkBackendConnection();
+    initAddToCartButtons();
 });
 
 // ======================
@@ -44,22 +50,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 async function checkBackendConnection() {
     try {
-        const response = await fetch(`${API_URL}/health`, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-            }
-        });
-
-        if (response.ok) {
-            console.log('✅ Backend conectado correctamente');
-        } else {
-            console.warn('⚠️ Backend respondió pero con error:', response.status);
-        }
-    } catch (error) {
-        console.error('❌ No se pudo conectar al backend:', error);
-        console.log('💡 Asegúrate de que el backend esté corriendo en:', API_URL);
-        console.log('💡 Ejecuta: npm run start:dev');
+        const response = await fetch(`${API_URL}/health`);
+        console.log(response.ok ? '✅ Backend conectado correctamente' : '⚠️ Backend respondió con error');
+    } catch {
+        console.error('❌ No se pudo conectar al backend.');
     }
 }
 
@@ -82,18 +76,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 //    CARRITO DE COMPRAS
 // ======================
 
-// Agregar producto al carrito
+// ➕ Agregar producto al carrito
 async function addToCart(productName, price) {
     const userSession = getUserSession();
-
-    console.log('🛒 Agregando al carrito:', { productName, price });
+    console.log('🛒 Agregando al carrito:', { productName, price, userSession });
 
     try {
         const response = await fetch(`${API_URL}/api/cart/add`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 user_session: userSession,
                 product_name: productName,
@@ -110,106 +101,145 @@ async function addToCart(productName, price) {
         const data = await response.json();
         console.log('✅ Producto agregado:', data);
 
-        showNotification(`${productName} agregado al carrito`, 'success');
+        showNotification(`${productName} agregado al carrito 🥗`, 'success');
         updateCartBadge();
-
     } catch (error) {
         console.error('❌ Error:', error);
-        showNotification('Error al agregar producto. Verifica que el backend esté corriendo.', 'error');
+        showNotification('Error al agregar producto. Verifica el backend.', 'error');
     }
 }
 
-// Actualizar badge del carrito
+// 🔁 Actualizar número del carrito (badge)
 async function updateCartBadge() {
     const userSession = getUserSession();
 
     try {
-        // Endpoint correcto del backend NestJS
         const response = await fetch(`${API_URL}/api/cart?user_session=${userSession}`);
-
         if (!response.ok) return;
 
         const data = await response.json();
+        let badge = document.getElementById('cart-count');
+        const cartIcon = document.querySelector('.cart-icon');
 
-        // Actualizar badge en el header
-        let badge = document.getElementById('cart-badge');
         if (!badge) {
             badge = document.createElement('span');
-            badge.id = 'cart-badge';
+            badge.id = 'cart-count';
             badge.className = 'cart-badge';
-
-            const cartButton = document.querySelector('.cta-button');
-            if (cartButton) {
-                cartButton.style.position = 'relative';
-                cartButton.appendChild(badge);
-            }
         }
 
-        // data.count es el número total de items en el carrito
-        if (data.count > 0) {
-            badge.textContent = data.count;
-            badge.style.display = 'block';
-        } else {
-            badge.style.display = 'none';
+        // Asegurar que el badge esté dentro del ícono del carrito
+        if (cartIcon && !cartIcon.contains(badge)) {
+            cartIcon.appendChild(badge);
         }
+
+        const count = data.count || 0;
+        badge.textContent = count > 0 ? count : '';
+        badge.style.display = count > 0 ? 'flex' : 'none';
 
     } catch (error) {
         console.error('Error al actualizar badge:', error);
     }
 }
 
-// Ver carrito completo
+// 🔍 Ver carrito completo
 async function viewCart() {
     const userSession = getUserSession();
-
     try {
         const response = await fetch(`${API_URL}/api/cart?user_session=${userSession}`);
-
-        if (!response.ok) {
-            throw new Error('Error al obtener el carrito');
-        }
-
+        if (!response.ok) throw new Error('Error al obtener el carrito');
         const cart = await response.json();
-
         console.log('🛒 Carrito:', cart);
-        console.log('Total items:', cart.count);
-        console.log('Total price: $', cart.total);
-        console.log('Items:', cart.items);
-
-        // Aquí puedes mostrar el carrito en un modal o página
-        // Por ahora solo lo mostramos en consola
-        showNotification(`Carrito: ${cart.count} items - Total: $${cart.total}`, 'info');
-
         return cart;
-
     } catch (error) {
         console.error('Error al ver carrito:', error);
         showNotification('Error al obtener el carrito', 'error');
     }
 }
 
-// Limpiar carrito
+// 🗑️ Vaciar carrito
 async function clearCart() {
     const userSession = getUserSession();
-
     try {
-        const response = await fetch(`${API_URL}/api/cart/clear/all?user_session=${userSession}`, {
-            method: 'DELETE'
-        });
-
-        if (!response.ok) {
-            throw new Error('Error al limpiar el carrito');
-        }
-
-        console.log('✅ Carrito limpiado');
-        showNotification('Carrito vaciado', 'success');
+        const response = await fetch(`${API_URL}/api/cart/clear/all?user_session=${userSession}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error('Error al limpiar carrito');
+        showNotification('Carrito vaciado 🧹', 'success');
         updateCartBadge();
-
     } catch (error) {
         console.error('Error al limpiar carrito:', error);
-        showNotification('Error al limpiar el carrito', 'error');
     }
 }
+
+// ======================
+//    GESTIÓN DE SESIÓN DE USUARIO
+// ======================
+
+// Función para migrar carrito cuando el usuario hace login
+async function migrateCartOnLogin(username) {
+    try {
+        const tempSession = localStorage.getItem('user_session');
+
+        // Si no hay sesión temporal o ya es de usuario, no hay nada que migrar
+        if (!tempSession || tempSession.startsWith('user_')) {
+            console.log('📦 No hay carrito temporal para migrar');
+            return;
+        }
+
+        console.log('🔄 Migrando carrito temporal al usuario...');
+        console.log('   Desde:', tempSession);
+        console.log('   Hacia:', `user_${username}`);
+
+        const response = await fetch(`${API_URL}/api/cart/migrate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                temp_session: tempSession,
+                new_session: `user_${username}`
+            })
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            console.log('✅ Carrito migrado exitosamente:', result);
+
+            // Limpiar sesión temporal
+            localStorage.removeItem('user_session');
+
+            // Actualizar badge del carrito
+            updateCartBadge();
+
+            return true;
+        } else {
+            console.warn('⚠️ No se pudo migrar el carrito, pero continuando...');
+            return false;
+        }
+    } catch (error) {
+        console.error('❌ Error al migrar carrito:', error);
+        return false;
+    }
+}
+
+// Función para actualizar UI cuando el usuario está logueado
+function updateUIForLoggedInUser() {
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    if (token && username) {
+        console.log('👤 Usuario logueado:', username);
+
+        const userGreeting = document.querySelector('.user-greeting');
+        if (userGreeting) {
+            userGreeting.textContent = `¡Hola, ${username}!`;
+        }
+
+        updateCartBadge();
+    }
+}
+
+// Exponer funciones globalmente
+window.migrateCartOnLogin = migrateCartOnLogin;
+window.updateUIForLoggedInUser = updateUIForLoggedInUser;
 
 // ======================
 //    FORMULARIO DE CONTACTO
@@ -217,50 +247,10 @@ async function clearCart() {
 
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
-    contactForm.addEventListener('submit', async function(e) {
+    contactForm.addEventListener('submit', e => {
         e.preventDefault();
-
-        const formData = {
-            name: this.querySelector('input[type="text"]').value,
-            email: this.querySelector('input[type="email"]').value,
-            message: this.querySelector('textarea').value,
-        };
-
-        console.log('📧 Enviando mensaje de contacto...');
-
-        // Por ahora solo mostramos un mensaje de éxito
-        // El backend no tiene endpoint de contacto todavía
-        console.log('Datos del formulario:', formData);
-        showNotification('¡Mensaje enviado! Te contactaremos pronto.', 'success');
-        this.reset();
-
-        // TODO: Cuando se implemente el endpoint de contacto, descomentar esto:
-        /*
-        try {
-            const response = await fetch(`${API_URL}/api/contact`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData)
-            });
-
-            if (!response.ok) {
-                const error = await response.json();
-                throw new Error(error.message || 'Error al enviar mensaje');
-            }
-
-            const data = await response.json();
-            console.log('✅ Mensaje enviado:', data);
-
-            showNotification('¡Mensaje enviado exitosamente! Te contactaremos pronto.', 'success');
-            this.reset();
-
-        } catch (error) {
-            console.error('❌ Error:', error);
-            showNotification('Error al enviar el mensaje. Intenta de nuevo.', 'error');
-        }
-        */
+        showNotification('📬 ¡Mensaje enviado! Te contactaremos pronto.', 'success');
+        contactForm.reset();
     });
 }
 
@@ -290,72 +280,58 @@ function showNotification(message, type = 'info') {
         background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
         color: white;
         padding: 15px 20px;
-        margin-bottom: 10px;
         border-radius: 8px;
         box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         animation: slideIn 0.3s ease;
         max-width: 300px;
+        font-weight: 500;
     `;
     notification.textContent = message;
 
     container.appendChild(notification);
-
     setTimeout(() => {
         notification.style.animation = 'slideOut 0.3s ease';
         setTimeout(() => notification.remove(), 300);
-    }, 3000);
+    }, 2500);
 }
 
+// Exponer globalmente
+window.globalShowNotification = showNotification;
+
 // ======================
-//    ESTILOS
+//    ESTILOS ANIMADOS
 // ======================
 
 const style = document.createElement('style');
 style.textContent = `
-    @keyframes slideIn {
-        from {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-        to {
-            transform: translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    @keyframes slideOut {
-        from {
-            transform: translateX(0);
-            opacity: 1;
-        }
-        to {
-            transform: translateX(400px);
-            opacity: 0;
-        }
-    }
-    
-    .cart-badge {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        background: #ff4444;
-        color: white;
-        border-radius: 50%;
-        width: 20px;
-        height: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 12px;
-        font-weight: bold;
-        animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
-    }
-`;
+@keyframes slideIn {
+    from { transform: translateX(400px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slideOut {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(400px); opacity: 0; }
+}
+.cart-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}`;
 document.head.appendChild(style);
 
 // ======================
@@ -364,31 +340,28 @@ document.head.appendChild(style);
 
 const ctaButton = document.querySelector('.cta-button');
 if (ctaButton) {
-    ctaButton.addEventListener('click', function() {
+    ctaButton.addEventListener('click', () => {
         const menuSection = document.getElementById('menu');
-        if (menuSection) {
-            menuSection.scrollIntoView({ behavior: 'smooth' });
-        }
+        if (menuSection) menuSection.scrollIntoView({ behavior: 'smooth' });
     });
 }
 
 // ======================
-//    EVENT LISTENERS PARA BOTONES DE AGREGAR AL CARRITO
+//    BOTONES DE "AGREGAR AL CARRITO"
 // ======================
 
-// Agregar event listeners a todos los botones "Agregar al Carrito"
-document.addEventListener('DOMContentLoaded', function() {
-    const addToCartButtons = document.querySelectorAll('.add-to-cart');
-
+function initAddToCartButtons() {
+    const addToCartButtons = document.querySelectorAll('.order-btn, .extra-btn, .add-to-cart');
     addToCartButtons.forEach(button => {
         button.addEventListener('click', function() {
-            const productName = this.getAttribute('data-product');
-            const price = parseFloat(this.getAttribute('data-price'));
-
-            addToCart(productName, price);
+            const productName = this.getAttribute('data-product-name') || this.getAttribute('data-product');
+            const price = parseFloat(this.getAttribute('data-product-price') || this.getAttribute('data-price'));
+            if (productName && !isNaN(price)) {
+                addToCart(productName, price);
+            }
         });
     });
-});
+}
 
 // ======================
 //    LOG INICIAL
@@ -409,7 +382,5 @@ console.log(`
    - viewCart()
    - clearCart()
    - updateCartBadge()
-
-💡 Abre la consola (F12) para ver los logs de todas las operaciones.
-💡 Si hay errores de conexión, asegúrate de que el backend esté corriendo.
+   - migrateCartOnLogin(username)
 `);

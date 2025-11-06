@@ -486,13 +486,13 @@ async function handleCheckout(e) {
 // ======================
 
 function showNotification(message, type = 'info') {
-    // Usar la función global si existe
-    if (typeof window.showNotification === 'function') {
-        window.showNotification(message, type);
+    // Verificar si existe la función global de Inicio.js (pero NO la de cart.js)
+    if (typeof window.globalShowNotification === 'function') {
+        window.globalShowNotification(message, type);
         return;
     }
 
-    // Si no, crear notificación propia
+    // Si no existe, crear notificación propia
     const notification = document.createElement('div');
     notification.className = `notification notification-${type}`;
     notification.textContent = message;
@@ -531,19 +531,58 @@ function showNotification(message, type = 'info') {
 // ======================
 
 function getUserSession() {
-    let sessionId = localStorage.getItem('ensaladazo_session');
+    // Primero verificar si hay un usuario logueado
+    const token = localStorage.getItem('token');
+    const username = localStorage.getItem('username');
+
+    if (token && username) {
+        // Si hay usuario logueado, usar su username como sesión
+        return `user_${username}`;
+    }
+
+    // Si no hay usuario, usar sesión temporal
+    let sessionId = localStorage.getItem('user_session');
     if (!sessionId) {
-        sessionId = 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('ensaladazo_session', sessionId);
+        sessionId = 'temp_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('user_session', sessionId);
     }
     return sessionId;
 }
 
+// Nueva función para migrar carrito al hacer login
+async function migrateCartOnLogin(userId) {
+    try {
+        const tempSession = localStorage.getItem('ensaladazo_session');
 
-function updateCartBadge() {
-    const badge = document.getElementById('cart-count');
-    if (badge) {
-        const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-        badge.textContent = totalItems;
+        if (!tempSession || tempSession.startsWith('user_')) {
+            return; // No hay carrito temporal para migrar
+        }
+
+        console.log('🔄 Migrando carrito temporal al usuario...');
+
+        const response = await fetch(`${API_URL}/api/cart/migrate`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                temp_session: tempSession,
+                user_id: userId
+            })
+        });
+
+        if (response.ok) {
+            console.log('✅ Carrito migrado exitosamente');
+            // Limpiar sesión temporal
+            localStorage.removeItem('ensaladazo_session');
+            // Recargar carrito con la nueva sesión
+            await loadCartFromBackend();
+            updateCartBadge();
+        }
+    } catch (error) {
+        console.error('❌ Error al migrar carrito:', error);
     }
 }
+
+// Exponer función globalmente para usarla desde Inicio.js
+window.migrateCartOnLogin = migrateCartOnLogin;
