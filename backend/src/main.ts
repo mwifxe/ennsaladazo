@@ -14,20 +14,18 @@ async function bootstrap() {
     }),
   );
 
-  // 🌍 CORS (Render + local)
-  app.enableCors({
-    origin: (origin, callback) => {
-      if (!origin || origin.includes('localhost') || origin.includes('127.0.0.1')) {
-        callback(null, true);
-      } else {
-        const allowedOrigins = process.env.CORS_ORIGIN?.split(',') || [];
-        if (allowedOrigins.includes(origin)) callback(null, true);
-        else callback(new Error('Not allowed by CORS'));
-      }
-    },
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    // 🌍 CORS: permite Vercel + localhost
+    app.enableCors({
+    origin: [
+        'https://ennsaladazo.vercel.app', // 👈 tu frontend real en Vercel
+        'http://localhost:5173',          // para desarrollo local (Vite, por si acaso)
+        'http://localhost:3000',          // si usás Nest local
+    ],
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-  });
+    });
+
 
   // 🚦 Prefijo global
   app.setGlobalPrefix('api', { exclude: ['health', ''] });
