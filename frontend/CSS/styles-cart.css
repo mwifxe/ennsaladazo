@@ -2,11 +2,11 @@
    VARIABLES Y RESET
 ========================================= */
 :root {
-    --primary-green: #097d4c;      /* Verde oscuro elegante */
-    --primary-dark: #065c38;       /* Versión más profunda del verde */
-    --secondary-orange: #f1ead0;   /* Amarillo claro */
-    --accent-yellow: #f1ead0;      /* Amarillo claro */
-    --bg-light: #f1ead0;           /* Fondo claro */
+    --primary-green: #097d4c;
+    --primary-dark: #065c38;
+    --secondary-orange: #f1ead0;
+    --accent-yellow: #f1ead0;
+    --bg-light: #f1ead0;
     --text-dark: #1a1a1a;
     --text-gray: #666;
     --white: #ffffff;
@@ -14,7 +14,6 @@
     --danger: #e74c3c;
     --success: #27ae60;
 }
-
 
 * {
     margin: 0;
@@ -911,8 +910,9 @@ body {
 }
 
 /* =========================================
-   RESPONSIVE
+   RESPONSIVE PARA MÓVIL
 ========================================= */
+
 @media (max-width: 1024px) {
     .cart-layout {
         grid-template-columns: 1fr;
@@ -925,38 +925,231 @@ body {
     .cart-products-section {
         order: 1;
     }
+
+    .cart-summary-card {
+        position: static;
+    }
 }
 
 @media (max-width: 768px) {
+    /* Header y navegación */
+    .nav {
+        padding: 0.8rem 1rem;
+    }
+
+    .logo-image {
+        height: 45px;
+    }
+
     .nav-menu {
         display: none;
     }
 
+    .nav-actions {
+        gap: 1rem;
+    }
+
+    .login-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+
+    .cart-badge {
+        width: 18px;
+        height: 18px;
+        font-size: 0.65rem;
+        top: -6px;
+        right: -6px;
+    }
+
+    /* Hero del carrito */
+    .cart-hero {
+        height: 200px;
+    }
+
     .cart-hero-content h1 {
         font-size: 2rem;
+        margin-bottom: 0.3rem;
     }
 
-    .cart-item {
-        flex-direction: column;
-        text-align: center;
+    .cart-hero-content i {
+        margin-bottom: 0.5rem;
     }
 
-    .cart-item-actions {
-        align-items: center;
-        width: 100%;
+    .cart-intro {
+        font-size: 0.95rem;
     }
 
-    .payment-options {
-        grid-template-columns: 1fr;
+    /* Contenedor principal */
+    .cart-main {
+        padding: 2rem 0;
+    }
+
+    .container {
+        padding: 0 1rem;
+    }
+
+    /* Sección de productos */
+    .cart-products-section {
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
     }
 
     .section-header-cart {
         flex-direction: column;
         gap: 1rem;
+        align-items: stretch;
+    }
+
+    .section-header-cart h2 {
+        font-size: 1.4rem;
+        text-align: center;
     }
 
     .clear-cart-btn {
         width: 100%;
         justify-content: center;
+        padding: 0.8rem 1rem;
     }
-}
+
+    /* Items del carrito */
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+        padding: 1.5rem 1rem;
+        gap: 1rem;
+    }
+
+    .cart-item-image {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    .cart-item-details {
+        width: 100%;
+    }
+
+    .cart-item-name {
+        font-size: 1.1rem;
+    }
+
+    .cart-item-description {
+        font-size: 0.85rem;
+    }
+
+    .cart-item-price {
+        font-size: 1.2rem;
+    }
+
+    .cart-item-actions {
+        align-items: center;
+        width: 100%;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    .quantity-controls {
+        padding: 0.4rem;
+    }
+
+    .quantity-btn {
+        width: 36px;
+        height: 36px;
+    }
+
+    .quantity-display {
+        min-width: 45px;
+        font-size: 1rem;
+    }
+
+    .remove-item-btn {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.85rem;
+    }
+
+    /* Carrito vacío */
+    .empty-cart {
+        padding: 3rem 1rem;
+    }
+
+    .empty-cart-icon {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1.5rem;
+    }
+
+    .empty-cart h3 {
+        font-size: 1.5rem;
+    }
+
+    .empty-cart p {
+        font-size: 1rem;
+    }
+
+    .btn-back-menu {
+        padding: 0.9rem 1.8rem;
+        font-size: 0.95rem;
+    }
+
+    /* Resumen del carrito */
+    .cart-summary-card {
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
+    }
+
+    .cart-summary-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .summary-row {
+        font-size: 0.95rem;
+        margin-bottom: 0.8rem;
+    }
+
+    .total-row {
+        font-size: 1.1rem;
+    }
+
+    .total-amount {
+        font-size: 1.5rem !important;
+    }
+
+    .promo-input-group {
+        flex-direction: column;
+    }
+
+    .promo-apply-btn {
+        width: 100%;
+        padding: 0.9rem;
+    }
+
+    .checkout-btn {
+        padding: 1rem;
+        font-size: 1rem;
+    }
+
+    /* Beneficios */
+    .benefits-card {
+        padding: 1.2rem 1rem;
+        border-radius: 15px;
+    }
+
+    .benefit-item {
+        gap: 0.8rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .benefit-item strong {
+        font-size: 0.9rem;
+    }
+
+    .benefit-item p {
+        font-size: 0.8rem;
+    }
+
+    /* Modal de checkout */
+    .checkout-modal .modal-header {
+        padding: 1.2rem 1rem;
+        border-radius: 15px 15px 0

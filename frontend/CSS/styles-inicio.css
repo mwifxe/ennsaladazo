@@ -9,21 +9,20 @@
 }
 
 :root {
-    --primary-green: #097d4c;      /* Verde principal (sustituye el anterior verde brillante) */
-    --dark-green: #065c3e;         /* Verde más profundo para gradientes y hover */
-    --darker-green: #043d2c;       /* Verde casi negro para detalles y sombras */
-    --text-dark: #1e2a23;          /* Texto principal ligeramente verdoso, combina con el tono base */
-    --text-gray: #4b5a50;          /* Gris con tinte verde oscuro */
-    --text-light: #7a887d;         /* Gris verdoso claro para texto secundario */
-    --bg-light: #f1ead0;           /* Fondo principal cálido (amarillo claro) */
-    --bg-green: #e5f0e0;           /* Fondo alterno con leve verde pálido */
-    --border-light: #dcd3b5;       /* Bordes con tono arena */
-    --white: #ffffff;              /* Blanco puro para contraste */
+    --primary-green: #097d4c;
+    --dark-green: #065c3e;
+    --darker-green: #043d2c;
+    --text-dark: #1e2a23;
+    --text-gray: #4b5a50;
+    --text-light: #7a887d;
+    --bg-light: #f1ead0;
+    --bg-green: #e5f0e0;
+    --border-light: #dcd3b5;
+    --white: #ffffff;
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 10px 30px rgba(0, 0, 0, 0.1);
     --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
-
 
 html {
     scroll-behavior: smooth;
@@ -506,6 +505,18 @@ body {
     box-shadow: var(--shadow-md);
 }
 
+.about-image .carousel {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+.about-image .carousel img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
 /* ======================
    SECCIÓN CONTACTO
    ====================== */
@@ -651,7 +662,7 @@ body {
 }
 
 /* ======================
-   RESPONSIVE
+   RESPONSIVE PARA MÓVIL
    ====================== */
 
 @media (max-width: 992px) {
@@ -677,9 +688,19 @@ body {
 }
 
 @media (max-width: 768px) {
+    /* Header y navegación */
     .nav {
         flex-wrap: wrap;
         gap: 1rem;
+        padding: 0.8rem 1rem;
+    }
+
+    .nav-brand {
+        max-width: 100px;
+    }
+
+    .logo-image {
+        width: 100%;
     }
     
     .nav-menu {
@@ -694,14 +715,36 @@ body {
     .nav-menu.active {
         display: flex;
     }
+
+    .nav-actions {
+        gap: 10px;
+    }
+
+    .login-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    .cart-badge {
+        font-size: 0.65rem;
+        min-width: 16px;
+        padding: 2px 5px;
+    }
     
+    /* Hero */
     .hero {
         padding-top: 100px;
-        min-height: auto;
+        min-height: 80vh;
     }
     
     .hero-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+
+    .hero-description {
+        font-size: 1rem;
+        line-height: 1.6;
     }
     
     .hero-stats {
@@ -710,24 +753,226 @@ body {
         flex-direction: column;
         gap: 20px;
         margin-top: 40px;
+        padding: 20px;
+        width: 90%;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .stat-label {
+        font-size: 0.9rem;
     }
     
     .hero-buttons {
         flex-direction: column;
-        align-items: center;
+        align-items: stretch;
+        gap: 0.8rem;
     }
     
     .btn-primary {
         width: 100%;
-        max-width: 300px;
+        max-width: 100%;
+        padding: 12px 24px;
+        font-size: 0.95rem;
+    }
+
+    .hero-image {
+        display: none;
     }
     
+    /* Secciones */
+    .menu,
+    .about,
+    .contact {
+        padding: 50px 20px;
+    }
+
+    .section-header {
+        margin-bottom: 2.5rem;
+    }
+
     .section-title {
         font-size: 2rem;
     }
-    
+
+    .section-subtitle {
+        font-size: 1rem;
+    }
+
+    /* Menú */
+    .menu-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .menu-item {
+        padding: 1.5rem;
+    }
+
+    .menu-image {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 1rem;
+    }
+
+    .menu-item h3 {
+        font-size: 1.3rem;
+    }
+
+    .menu-item p {
+        font-size: 0.95rem;
+    }
+
+    .price {
+        font-size: 1.5rem;
+    }
+
+    .add-to-cart {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    /* Sobre Nosotros */
+    .about-text h2 {
+        font-size: 2rem;
+    }
+
+    .about-text p {
+        font-size: 1rem;
+    }
+
+    .features {
+        margin-top: 1.5rem;
+    }
+
+    .feature {
+        font-size: 0.95rem;
+    }
+
+    /* Contacto */
+    .contact-info {
+        gap: 1.5rem;
+    }
+
+    .contact-item {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+
+    .contact-item i {
+        padding: 10px;
+    }
+
+    .contact-item h4 {
+        font-size: 1rem;
+    }
+
+    .contact-item p {
+        font-size: 0.9rem;
+    }
+
+    .contact-form input,
+    .contact-form textarea {
+        padding: 12px;
+        font-size: 0.95rem;
+    }
+
+    .contact-form textarea {
+        min-height: 100px;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 40px 20px 20px;
+    }
+
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
+        gap: 2rem;
+    }
+
+    .footer-brand .logo-image {
+        max-width: 120px;
+    }
+
+    .footer-links ul {
+        padding: 0;
+    }
+
+    .footer-links h4,
+    .footer-info h4 {
+        font-size: 1.1rem;
+    }
+
+    .footer-bottom {
+        font-size: 0.9rem;
+    }
+}
+
+/* Para celulares muy pequeños */
+@media (max-width: 375px) {
+    .nav-brand {
+        max-width: 80px;
+    }
+
+    .hero {
+        min-height: 70vh;
+    }
+
+    .hero-title {
+        font-size: 1.7rem;
+    }
+
+    .hero-description {
+        font-size: 0.9rem;
+    }
+
+    .hero-stats {
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .stat-number {
+        font-size: 1.7rem;
+    }
+
+    .stat-label {
+        font-size: 0.85rem;
+    }
+
+    .section-title {
+        font-size: 1.7rem;
+    }
+
+    .section-subtitle {
+        font-size: 0.95rem;
+    }
+
+    .menu-item {
+        padding: 1.2rem;
+    }
+
+    .menu-image {
+        width: 70px;
+        height: 70px;
+    }
+
+    .menu-item h3 {
+        font-size: 1.2rem;
+    }
+
+    .price {
+        font-size: 1.3rem;
+    }
+
+    .about-text h2 {
+        font-size: 1.7rem;
+    }
+
+    .footer-brand .logo-image {
+        max-width: 100px;
     }
 }
