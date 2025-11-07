@@ -947,3 +947,82 @@ body {
         font-size: 1.7rem;
     }
 }
+
+/* ✅ AGREGAR AL FINAL DE TU styles-Contacto.css */
+
+/* Menú hamburguesa para móviles */
+.mobile-menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-dark);
+    cursor: pointer;
+    padding: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
+    z-index: 1001;
+    transition: color 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    color: var(--primary-green);
+}
+
+/* Navegación móvil */
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+
+    .nav-menu {
+        position: fixed;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 5px 20px var(--shadow);
+        transform: translateY(-100%);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        gap: 0;
+    }
+
+    .nav-menu.active {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .nav-link {
+        padding: 1rem 0;
+        font-size: 1.1rem;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        width: 100%;
+        justify-content: center;
+        min-height: 44px;
+    }
+
+    .nav-link:last-child {
+        border-bottom: none;
+    }
+
+    .nav-actions {
+        gap: 0.75rem;
+    }
+
+    .login-btn {
+        padding: 0.75rem 1.25rem;
+        font-size: 0.85rem;
+        min-height: 44px;
+    }
+
+    .cart-icon {
+        min-width: 44px;s
+        min-height: 44px;
+        justify-content: center;
+    }
+}

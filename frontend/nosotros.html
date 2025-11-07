@@ -24,8 +24,13 @@
                 </a>
             </div>
 
+            <!-- ✅ BOTÓN HAMBURGUESA AGREGADO -->
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Abrir menú">
+                <i data-lucide="menu" size="24"></i>
+            </button>
+
             <!-- Menú de navegación -->
-            <ul class="nav-menu">
+            <ul class="nav-menu" id="nav-menu">
                 <li><a href="index.html" class="nav-link">Inicio</a></li>
                 <li><a href="menu.html" class="nav-link">Menú</a></li>
                 <li><a href="./nosotros.html" class="nav-link active">Nosotros</a></li>
@@ -293,9 +298,45 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
     
-    <!-- Inicializar iconos -->
+    <!-- ✅ JAVASCRIPT DEL MENÚ HAMBURGUESA AGREGADO -->
     <script>
+        // Inicializar iconos
         lucide.createIcons();
+
+        // Menú hamburguesa
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        const menuIcon = mobileMenuToggle.querySelector('i');
+
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+            
+            // Cambiar ícono
+            if (navMenu.classList.contains('active')) {
+                menuIcon.setAttribute('data-lucide', 'x');
+            } else {
+                menuIcon.setAttribute('data-lucide', 'menu');
+            }
+            lucide.createIcons();
+        });
+
+        // Cerrar menú al hacer clic en un enlace
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            });
+        });
+
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.nav') && navMenu.classList.contains('active')) {
+                navMenu.classList.remove('active');
+                menuIcon.setAttribute('data-lucide', 'menu');
+                lucide.createIcons();
+            }
+        });
     </script>
 </body>
 </html>
