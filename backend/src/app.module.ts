@@ -3,6 +3,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ProductsModule } from './products/products.module';
+import { AuthModule } from './auth/auth.module';
+import { CartModule } from './cart/cart.module';
+import { ContactModule } from './contact/contact.module';
+import { CustomSaladsModule } from './custom-salads/custom-salads.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,6 +39,12 @@ import { AppService } from './app.service';
         };
       },
     }),
+    ProductsModule,
+    AuthModule,
+    CartModule,
+    ContactModule,
+    CustomSaladsModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
