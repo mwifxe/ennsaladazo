@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { ProductsService } from './products/products.service'; // 👈 Import del servicio
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,21 +15,25 @@ async function bootstrap() {
     }),
   );
 
-    // 🌍 CORS: permite Vercel + localhost
-    app.enableCors({
+  // 🌍 CORS: permite Vercel + localhost
+  app.enableCors({
     origin: [
-        'https://ennsaladazo.vercel.app', // 👈 tu frontend real en Vercel
-        'http://localhost:5173',          // para desarrollo local (Vite, por si acaso)
-        'http://localhost:3000',          // si usás Nest local
+      'https://ennsaladazo.vercel.app', // 👈 tu frontend real en Vercel
+      'http://localhost:5173',          // para desarrollo local (Vite, por si acaso)
+      'http://localhost:3000',          // si usás Nest local
     ],
     methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
-    });
-
+  });
 
   // 🚦 Prefijo global
   app.setGlobalPrefix('api', { exclude: ['health', ''] });
+
+  // 🔥 Inicializa productos automáticamente al iniciar
+  const productService = app.get(ProductsService);
+  await productService.seedProducts();
+  console.log('🪴 Productos inicializados correctamente.');
 
   // 🔥 Puerto dinámico: Render usa process.env.PORT (default 10000)
   const port = process.env.PORT || 10000;

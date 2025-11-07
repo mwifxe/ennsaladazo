@@ -11,11 +11,13 @@ export class ProductsService {
         private readonly productRepository: Repository<Product>,
     ) {}
 
+    // Crear producto
     async create(createProductDto: CreateProductDto): Promise<Product> {
         const product = this.productRepository.create(createProductDto);
         return await this.productRepository.save(product);
     }
 
+    // Obtener todos los productos disponibles
     async findAll(): Promise<Product[]> {
         return await this.productRepository.find({
             where: { is_available: true },
@@ -23,6 +25,7 @@ export class ProductsService {
         });
     }
 
+    // Buscar producto por ID
     async findOne(id: string): Promise<Product> {
         const product = await this.productRepository.findOne({ where: { id } });
         if (!product) {
@@ -31,6 +34,7 @@ export class ProductsService {
         return product;
     }
 
+    // Buscar productos por categoría
     async findByCategory(category: string): Promise<Product[]> {
         return await this.productRepository.find({
             where: { category, is_available: true },
@@ -38,24 +42,27 @@ export class ProductsService {
         });
     }
 
+    // Actualizar producto
     async update(id: string, updateProductDto: UpdateProductDto): Promise<Product> {
         const product = await this.findOne(id);
         Object.assign(product, updateProductDto);
         return await this.productRepository.save(product);
     }
 
+    // Eliminar producto
     async remove(id: string): Promise<void> {
         const product = await this.findOne(id);
         await this.productRepository.remove(product);
     }
 
+    // Inicializar base de datos con productos predeterminados
     async seedProducts(): Promise<Product[]> {
         const productsData = [
             // Ensaladas principales
             {
                 name: 'Ensalada CobbFit',
                 description:
-                    'Mezcla fresca de lechuga, tomate, cebolla morada, aguacate, queso mozarella, tocino, pechuga de pollo, huevo duro, y rodajas de pan tostado.',
+                    'Mezcla fresca de lechuga, tomate, cebolla morada, aguacate, queso mozzarella, tocino, pechuga de pollo, huevo duro y rodajas de pan tostado.',
                 price: 4.0,
                 category: 'ensaladas',
                 is_available: true,
@@ -64,7 +71,7 @@ export class ProductsService {
             {
                 name: 'Ensalada César',
                 description:
-                    'Una ensalada a base de lechuga, pechuga de pollo, huevo duro, tomate, queso mozarella y rodajas de pan tostado.',
+                    'Ensalada clásica con lechuga, pollo, huevo duro, tomate, queso mozzarella y pan tostado.',
                 price: 3.25,
                 category: 'ensaladas',
                 is_available: true,
@@ -88,11 +95,11 @@ export class ProductsService {
                 is_available: true,
                 stock: 35,
             },
-            // Bebidas y smoothies
+            // Bebidas
             {
                 name: 'Smoothie Verde',
                 description:
-                    'Batido energizante de espinaca, manzana verde, jengibre y menta',
+                    'Batido energizante de espinaca, manzana verde, jengibre y menta.',
                 price: 2.75,
                 category: 'bebidas',
                 is_available: true,
@@ -101,7 +108,7 @@ export class ProductsService {
             {
                 name: 'Smoothie de Frutas',
                 description:
-                    'Batido refrescante de fresa, plátano, yogurt y miel',
+                    'Batido refrescante de fresa, plátano, yogurt y miel.',
                 price: 2.75,
                 category: 'bebidas',
                 is_available: true,
@@ -110,7 +117,7 @@ export class ProductsService {
             {
                 name: 'Jugo Natural',
                 description:
-                    'Jugo de naranja, zanahoria o piña recién exprimido',
+                    'Jugo natural de naranja, zanahoria o piña recién exprimido.',
                 price: 2.5,
                 category: 'bebidas',
                 is_available: true,
@@ -120,7 +127,7 @@ export class ProductsService {
             {
                 name: 'Aderezo Extra',
                 description:
-                    'Ranch, César, Balsámico o Miel Mostaza',
+                    'Ranch, César, Balsámico o Miel Mostaza.',
                 price: 0.5,
                 category: 'extras',
                 is_available: true,
@@ -129,7 +136,7 @@ export class ProductsService {
             {
                 name: 'Proteína Extra',
                 description:
-                    'Porción adicional de pollo, huevo o queso',
+                    'Porción adicional de pollo, huevo o queso.',
                 price: 1.0,
                 category: 'extras',
                 is_available: true,
@@ -138,7 +145,7 @@ export class ProductsService {
             {
                 name: 'Pan Tostado',
                 description:
-                    'Rebanadas de pan artesanal tostado',
+                    'Rebanadas de pan artesanal tostado.',
                 price: 0.75,
                 category: 'extras',
                 is_available: true,
@@ -147,15 +154,16 @@ export class ProductsService {
         ];
 
         const products: Product[] = [];
+
         for (const productData of productsData) {
-            const existingProduct = await this.productRepository.findOne({
+            const existing = await this.productRepository.findOne({
                 where: { name: productData.name },
             });
 
-            if (!existingProduct) {
-                const product = this.productRepository.create(productData);
-                const savedProduct = await this.productRepository.save(product);
-                products.push(savedProduct);
+            if (!existing) {
+                const newProduct = this.productRepository.create(productData);
+                const saved = await this.productRepository.save(newProduct);
+                products.push(saved);
             }
         }
 
