@@ -1209,3 +1209,113 @@ body {
         background-attachment: scroll;
     }
 }
+
+/* ===== HERO NOSOTROS ===== */
+.nosotros-hero {
+    position: relative;
+    width: 100%;
+    height: 70vh; /* Altura relativa a la pantalla */
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--white);
+    overflow: hidden;
+    border-radius: 0 0 40px 40px;
+}
+
+/* Imagen de fondo */
+.nosotros-hero .hero-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* mantiene proporción sin distorsionar */
+    object-position: center; /* centra la parte importante de la imagen */
+    z-index: 0;
+}
+
+/* Capa oscura de contraste */
+.nosotros-hero .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45); /* leve opacidad */
+    z-index: 1;
+}
+
+/* Contenido centrado */
+.nosotros-hero .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 750px;
+    padding: 0 1.5rem;
+    text-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nosotros-hero h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.nosotros-hero .highlight {
+    color: var(--accent-yellow);
+}
+
+.nosotros-hero .hero-subtitle {
+    font-size: 1.3rem;
+    font-weight: 400;
+    opacity: 0.95;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1024px) {
+    .nosotros-hero {
+        height: 60vh;
+    }
+
+    .nosotros-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .nosotros-hero .hero-subtitle {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .nosotros-hero {
+        height: 50vh;
+        min-height: 300px;
+        border-radius: 0 0 25px 25px;
+    }
+
+    .nosotros-hero h1 {
+        font-size: 2rem;
+    }
+
+    .nosotros-hero .hero-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .nosotros-hero {
+        height: 45vh;
+        min-height: 260px;
+    }
+
+    .nosotros-hero h1 {
+        font-size: 1.7rem;
+    }
+
+    .nosotros-hero .hero-subtitle {
+        font-size: 0.95rem;
+    }
+}
