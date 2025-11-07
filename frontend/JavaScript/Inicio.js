@@ -2,7 +2,7 @@
 //    CONFIGURACIÓN
 // ======================
 
-const API_URL = 'http://localhost:3050';  // Backend NestJS
+const API_URL = 'https://ennsaladazo.onrender.com';  // Backend NestJS
 
 // ======================
 //    SESIÓN DE USUARIO
