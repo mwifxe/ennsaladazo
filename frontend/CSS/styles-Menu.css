@@ -218,7 +218,7 @@ body {
 .menu-hero {
     position: relative;
     padding: 120px 1.5rem 60px;
-    background-image: url('../Images/Fondo/fondo-menu.jpg');
+    background-image: url('/frontend/Images/Ensaladas/wallpaper.jpeg');
     background-size: cover;
     background-position: center;
     background-attachment: scroll; /* Cambiado para mejor performance en móvil */
