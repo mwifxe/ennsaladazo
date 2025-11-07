@@ -349,9 +349,13 @@ body {
     padding: 1.5rem;
     border-radius: 15px;
     box-shadow: var(--shadow-md);
-    margin-top: 2rem;
     width: 100%;
     max-width: 300px;
+
+    /* ✨ Centramos el bloque */
+    margin: 2rem auto 0;
+    align-items: center; /* centra internamente los elementos */
+    text-align: center; /* opcional: alinea el texto al centro */
 }
 
 .stat {
